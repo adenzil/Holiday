@@ -1,7 +1,22 @@
 import Head from 'next/head'
 import fetch from 'isomorphic-unfetch'
+import { useState, useEffect } from 'react'
+import getConfig from 'next/config'
+
+// To fetch .env variables from next.config.js
+const {publicRuntimeConfig} = getConfig()
+const {holidayApiKey} = publicRuntimeConfig
 
 function Home(props) {
+
+  const [countries, setCountries] = React.useState([]);
+
+  React.useEffect(() => {
+    fetch('https://holidayapi.com/v1/countries?key='+holidayApiKey)
+    .then(res => res.json())
+    .then(data  => setCountries(data.countries))
+  }, []);
+
   return (
     <div className="container">
       <Head>
@@ -15,9 +30,7 @@ function Home(props) {
         </h1>
         <h2>Countries</h2>
         <select>
-        {
-          props.countries.map(country => <option key={country.code}>{country.name}</option>)
-        }
+        {countries.map(country => <option key={country.code}>{country.name}</option>)}
         </select>
       </main>
 
@@ -57,14 +70,6 @@ function Home(props) {
       `}</style>
     </div>
   )
-}
-
-Home.getInitialProps = async function() {
-  const res = await fetch('https://holidayapi.com/v1/countries?key='+process.env.holidayApiKey)
-  const countries = await res.json()
-  return {
-    countries: countries.countries
-  }
 }
 
 export default Home
