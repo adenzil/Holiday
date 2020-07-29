@@ -5,14 +5,14 @@ import getConfig from 'next/config'
 
 // To fetch .env variables from next.config.js
 const {publicRuntimeConfig} = getConfig()
-const {holidayApiKey} = publicRuntimeConfig
+const {holidayApiURL, holidayApiKey} = publicRuntimeConfig
 
 function Home(props) {
 
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
-    fetch('https://holidayapi.com/v1/countries?key='+holidayApiKey)
+    fetch(holidayApiURL + 'countries?key=' + holidayApiKey)
     .then(res => res.json())
     .then(data  => setCountries(data.countries))
   }, []);

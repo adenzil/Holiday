@@ -1,5 +1,6 @@
 module.exports = {
   publicRuntimeConfig: {
-    holidayApiKey: process.env.holidayApiKey
+    holidayApiKey: process.env.holidayApiKey,
+    holidayApiURL: process.env.holidayApiURL,
   }
 }
