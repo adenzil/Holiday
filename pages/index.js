@@ -3,15 +3,15 @@ import fetch from 'isomorphic-unfetch'
 import { useState, useEffect } from 'react'
 import getConfig from 'next/config'
 
-// To fetch .env variables from next.config.js
-const {publicRuntimeConfig} = getConfig()
-const {holidayApiURL, holidayApiKey} = publicRuntimeConfig
-
 function Home(props) {
 
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
+    // To fetch .env variables from next.config.js
+    const {publicRuntimeConfig} = getConfig()
+    const {holidayApiURL, holidayApiKey} = publicRuntimeConfig
+    
     fetch(holidayApiURL + 'countries?key=' + holidayApiKey)
     .then(res => res.json())
     .then(data  => setCountries(data.countries))
