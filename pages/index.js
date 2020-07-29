@@ -1,6 +1,7 @@
 import Head from 'next/head'
+import fetch from 'isomorphic-unfetch'
 
-export default function Home() {
+function Home(props) {
   return (
     <div className="container">
       <Head>
@@ -12,6 +13,12 @@ export default function Home() {
         <h1 className="title">
           Search for a Holiday!
         </h1>
+        <h2>Countries</h2>
+        <select>
+        {
+          props.countries.map(country => <option key={country.code}>{country.name}</option>)
+        }
+        </select>
       </main>
 
       <style jsx>{`
@@ -51,3 +58,13 @@ export default function Home() {
     </div>
   )
 }
+
+Home.getInitialProps = async function() {
+  const res = await fetch('https://holidayapi.com/v1/countries?key='+process.env.holidayApiKey)
+  const countries = await res.json()
+  return {
+    countries: countries.countries
+  }
+}
+
+export default Home
