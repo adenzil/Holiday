@@ -9,9 +9,9 @@ const {holidayApiKey} = publicRuntimeConfig
 
 function Home(props) {
 
-  const [countries, setCountries] = React.useState([]);
+  const [countries, setCountries] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetch('https://holidayapi.com/v1/countries?key='+holidayApiKey)
     .then(res => res.json())
     .then(data  => setCountries(data.countries))
