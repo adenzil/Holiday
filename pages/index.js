@@ -8,13 +8,21 @@ function Home(props) {
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
-    // To fetch .env variables from next.config.js
-    const {publicRuntimeConfig} = getConfig()
-    const {holidayApiURL, holidayApiKey} = publicRuntimeConfig
-    
-    fetch(holidayApiURL + 'countries?key=' + holidayApiKey)
-    .then(res => res.json())
-    .then(data  => setCountries(data.countries))
+    const savedCountries = localStorage.getItem("countries");
+    if (savedCountries) {
+      setCountries(JSON.parse(savedCountries));
+    } else {
+      // To fetch .env variables from next.config.js
+      const {publicRuntimeConfig} = getConfig()
+      const {holidayApiURL, holidayApiKey} = publicRuntimeConfig
+
+      fetch(holidayApiURL + 'countries?key=' + holidayApiKey)
+      .then(res => res.json())
+      .then((data)  => {
+        setCountries(data.countries)
+        localStorage.setItem("countries", JSON.stringify(data.countries))
+      })
+    }
   }, []);
 
   return (
