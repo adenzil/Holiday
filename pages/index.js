@@ -5,7 +5,10 @@ import getConfig from 'next/config'
 
 function Home() {
 
-  const [countries, setCountries] = useState([]);
+  const numberOfYears = 5
+  const [countries, setCountries] = useState([])
+  const [country, setCountry] = useState("")
+  const [year, setYear] = useState("")
 
   useEffect(() => {
     const savedCountries = localStorage.getItem("countries");
@@ -25,6 +28,11 @@ function Home() {
     }
   }, []);
 
+  var yearsArray = []
+  for (var i = currentYear(); i >= currentYear()-numberOfYears; i--) {
+    yearsArray.push(<option key={i}> {i} </option>)
+  }
+
   return (
     <div className="container">
       <Head>
@@ -37,10 +45,15 @@ function Home() {
           Search for a Holiday!
         </h1>
         <h2>Countries</h2>
-        <select>
+        <select onChange={e => setCountry(e.target.value)}>
         {countries.map(country => <option key={country.code}>{country.name}</option>)}
         </select>
-        <Years />
+        <h2>Year</h2>
+        <select disabled = {!country} onChange={e => setYear(e.target.value)}>
+        { yearsArray }
+        </select>
+        <h2></h2>
+        <button disabled = {!year}> <h3> List holidays </h3> </button>
       </main>
 
       <style jsx>{`
@@ -81,20 +94,8 @@ function Home() {
   )
 }
 
-function Years() {
-  var numberOfYears = 5
-  var currentYear = new Date().getFullYear()
-  var yearsArray = []
-  
-  for (var i = currentYear; i >= currentYear-numberOfYears; i--) {
-    yearsArray.push(<option key={i}> {i} </option>)
-  }
-
-  return (
-    <select>
-      {yearsArray}
-    </select>
-  );
+function currentYear() {
+  return new Date().getFullYear()
 }
 
 export default Home
