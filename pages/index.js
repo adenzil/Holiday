@@ -3,7 +3,7 @@ import fetch from 'isomorphic-unfetch'
 import { useState, useEffect } from 'react'
 import getConfig from 'next/config'
 
-function Home(props) {
+function Home() {
 
   const [countries, setCountries] = useState([]);
 
@@ -40,6 +40,7 @@ function Home(props) {
         <select>
         {countries.map(country => <option key={country.code}>{country.name}</option>)}
         </select>
+        <Years />
       </main>
 
       <style jsx>{`
@@ -78,6 +79,20 @@ function Home(props) {
       `}</style>
     </div>
   )
+}
+
+function Years() {
+  var numberOfYears = 5
+  var currentYear = new Date().getFullYear()
+  var yearsArray = []
+  for (var i = currentYear; i >= currentYear-numberOfYears; i--) {
+    yearsArray.push(<option key={i}> {i} </option>)
+  }
+  return (
+      <select>
+        {yearsArray}
+      </select>
+    );
 }
 
 export default Home
