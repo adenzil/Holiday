@@ -46,10 +46,12 @@ function Home() {
         </h1>
         <h2>Countries</h2>
         <select onChange={e => setCountry(e.target.value)}>
+        <option>Select a country</option>
         {countries.map(country => <option key={country.code}>{country.name}</option>)}
         </select>
         <h2>Year</h2>
         <select disabled = {!country} onChange={e => setYear(e.target.value)}>
+        <option>Select a year</option>
         { yearsArray }
         </select>
         <h2></h2>
