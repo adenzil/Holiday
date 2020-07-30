@@ -5,11 +5,11 @@ import getConfig from 'next/config'
 
 function Home() {
 
-  const numberOfYears = 1
   const [countries, setCountries] = useState([])
   const [country, setCountry] = useState("")
   const [year, setYear] = useState("")
   const [holidays, setHolidays] = useState([])
+  const [years, setYears] = useState([new Date().getFullYear() - 1])
 
   // To fetch .env variables from next.config.js
   const {publicRuntimeConfig} = getConfig()
@@ -28,11 +28,6 @@ function Home() {
         })
     }
   }, []);
-
-  var yearsArray = []
-  for (var i = previousYear(); i > previousYear()-numberOfYears; i--) {
-    yearsArray.push(<option key={i}> {i} </option>)
-  }
 
   function fetchHolidays() {
     fetch(holidayApiURL + 'holidays?key=' + holidayApiKey+'&country=' + country + '&year=' + year)
@@ -61,7 +56,7 @@ function Home() {
         <h2>Year</h2>
         <select disabled = {!country} onChange={e => setYear(e.target.value)}>
         <option>Select a year</option>
-        { yearsArray }
+        { years.map(year => <option key={year}>{year}</option>) }
         </select>
         <h2></h2>
         <button disabled = {!year} onClick={fetchHolidays}> <h3> List holidays </h3> </button>
@@ -107,10 +102,6 @@ function Home() {
       `}</style>
     </div>
   )
-}
-
-function previousYear() {
-  return new Date().getFullYear() - 1
 }
 
 export default Home
