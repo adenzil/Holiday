@@ -1,6 +1,30 @@
 import Head from 'next/head'
+import fetch from 'isomorphic-unfetch'
+import { useState, useEffect } from 'react'
+import getConfig from 'next/config'
 
-export default function Home() {
+function Home(props) {
+
+  const [countries, setCountries] = useState([]);
+
+  useEffect(() => {
+    const savedCountries = localStorage.getItem("countries");
+    if (savedCountries) {
+      setCountries(JSON.parse(savedCountries));
+    } else {
+      // To fetch .env variables from next.config.js
+      const {publicRuntimeConfig} = getConfig()
+      const {holidayApiURL, holidayApiKey} = publicRuntimeConfig
+
+      fetch(holidayApiURL + 'countries?key=' + holidayApiKey)
+        .then(res => res.json())
+        .then((data)  => {
+          setCountries(data.countries)
+          localStorage.setItem("countries", JSON.stringify(data.countries))
+        })
+    }
+  }, []);
+
   return (
     <div className="container">
       <Head>
@@ -12,6 +36,10 @@ export default function Home() {
         <h1 className="title">
           Search for a Holiday!
         </h1>
+        <h2>Countries</h2>
+        <select>
+        {countries.map(country => <option key={country.code}>{country.name}</option>)}
+        </select>
       </main>
 
       <style jsx>{`
@@ -51,3 +79,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default Home
