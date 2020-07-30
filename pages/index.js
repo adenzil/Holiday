@@ -85,14 +85,16 @@ function Years() {
   var numberOfYears = 5
   var currentYear = new Date().getFullYear()
   var yearsArray = []
+  
   for (var i = currentYear; i >= currentYear-numberOfYears; i--) {
     yearsArray.push(<option key={i}> {i} </option>)
   }
+
   return (
-      <select>
-        {yearsArray}
-      </select>
-    );
+    <select>
+      {yearsArray}
+    </select>
+  );
 }
 
 export default Home
