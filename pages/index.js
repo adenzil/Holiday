@@ -5,20 +5,21 @@ import getConfig from 'next/config'
 
 function Home() {
 
-  const numberOfYears = 5
+  const numberOfYears = 1
   const [countries, setCountries] = useState([])
   const [country, setCountry] = useState("")
   const [year, setYear] = useState("")
+  const [holidays, setHolidays] = useState([])
+
+  // To fetch .env variables from next.config.js
+  const {publicRuntimeConfig} = getConfig()
+  const {holidayApiURL, holidayApiKey} = publicRuntimeConfig
 
   useEffect(() => {
     const savedCountries = localStorage.getItem("countries");
     if (savedCountries) {
       setCountries(JSON.parse(savedCountries));
     } else {
-      // To fetch .env variables from next.config.js
-      const {publicRuntimeConfig} = getConfig()
-      const {holidayApiURL, holidayApiKey} = publicRuntimeConfig
-
       fetch(holidayApiURL + 'countries?key=' + holidayApiKey)
         .then(res => res.json())
         .then((data)  => {
@@ -29,8 +30,16 @@ function Home() {
   }, []);
 
   var yearsArray = []
-  for (var i = currentYear(); i >= currentYear()-numberOfYears; i--) {
+  for (var i = previousYear(); i > previousYear()-numberOfYears; i--) {
     yearsArray.push(<option key={i}> {i} </option>)
+  }
+
+  function fetchHolidays() {
+    fetch(holidayApiURL + 'holidays?key=' + holidayApiKey+'&country=' + country + '&year=' + year)
+      .then(res => res.json())
+      .then((data)  => {
+        setHolidays(data.holidays)
+      })
   }
 
   return (
@@ -47,7 +56,7 @@ function Home() {
         <h2>Countries</h2>
         <select onChange={e => setCountry(e.target.value)}>
         <option>Select a country</option>
-        {countries.map(country => <option key={country.code}>{country.name}</option>)}
+        {countries.map(country => <option key={country.code} value={country.code}>{country.name}</option>)}
         </select>
         <h2>Year</h2>
         <select disabled = {!country} onChange={e => setYear(e.target.value)}>
@@ -55,7 +64,11 @@ function Home() {
         { yearsArray }
         </select>
         <h2></h2>
-        <button disabled = {!year}> <h3> List holidays </h3> </button>
+        <button disabled = {!year} onClick={fetchHolidays}> <h3> List holidays </h3> </button>
+        <h2>Holidays</h2>
+        <ul>
+        {holidays.map(holiday => <li key={holiday.uuid} value={holiday.uuid}>{holiday.date} - {holiday.name}</li>)}
+        </ul>
       </main>
 
       <style jsx>{`
@@ -96,8 +109,8 @@ function Home() {
   )
 }
 
-function currentYear() {
-  return new Date().getFullYear()
+function previousYear() {
+  return new Date().getFullYear() - 1
 }
 
 export default Home
