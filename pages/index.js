@@ -17,11 +17,11 @@ function Home(props) {
       const {holidayApiURL, holidayApiKey} = publicRuntimeConfig
 
       fetch(holidayApiURL + 'countries?key=' + holidayApiKey)
-      .then(res => res.json())
-      .then((data)  => {
-        setCountries(data.countries)
-        localStorage.setItem("countries", JSON.stringify(data.countries))
-      })
+        .then(res => res.json())
+        .then((data)  => {
+          setCountries(data.countries)
+          localStorage.setItem("countries", JSON.stringify(data.countries))
+        })
     }
   }, []);
 
