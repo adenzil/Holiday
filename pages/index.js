@@ -2,13 +2,13 @@ import Head from 'next/head'
 import fetch from 'isomorphic-unfetch'
 import { useState, useEffect } from 'react'
 import getConfig from 'next/config'
+import Link from 'next/link'
 
 function Home() {
 
   const [countries, setCountries] = useState([])
   const [country, setCountry] = useState("")
   const [year, setYear] = useState("")
-  const [holidays, setHolidays] = useState([])
   const [years, setYears] = useState([new Date().getFullYear() - 1])
 
   // To fetch .env variables from next.config.js
@@ -28,14 +28,6 @@ function Home() {
         })
     }
   }, []);
-
-  function fetchHolidays() {
-    fetch(holidayApiURL + 'holidays?key=' + holidayApiKey+'&country=' + country + '&year=' + year)
-      .then(res => res.json())
-      .then((data)  => {
-        setHolidays(data.holidays)
-      })
-  }
 
   return (
     <div className="container">
@@ -59,11 +51,9 @@ function Home() {
         { years.map(year => <option key={year}>{year}</option>) }
         </select>
         <h2></h2>
-        <button disabled = {!year} onClick={fetchHolidays}> <h3> List holidays </h3> </button>
-        <h2>Holidays</h2>
-        <ul>
-        {holidays.map(holiday => <li key={holiday.uuid} value={holiday.uuid}>{holiday.date} - {holiday.name}</li>)}
-        </ul>
+        <Link href={`/holidays?country=${country}&year=${year}`} as={`/?country=${country}&year=${year}`}>
+          <button disabled = {!year}> <h3> List holidays </h3> </button>
+        </Link>
       </main>
 
       <style jsx>{`
