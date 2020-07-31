@@ -2,9 +2,11 @@ import Head from 'next/head'
 import fetch from 'isomorphic-unfetch'
 import { useState, useEffect } from 'react'
 import getConfig from 'next/config'
-import Link from 'next/link'
+import {useRouter} from 'next/router'
 
 function Home() {
+
+  const router = useRouter()
 
   const [countries, setCountries] = useState([])
   const [country, setCountry] = useState("")
@@ -29,6 +31,11 @@ function Home() {
     }
   }, []);
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    router.push(`/holidays?country=${country}&year=${year}`)
+  }
+
   return (
     <div className="container">
       <Head>
@@ -40,20 +47,20 @@ function Home() {
         <h1 className="title">
           Search for a Holiday!
         </h1>
-        <h2>Countries</h2>
-        <select onChange={e => setCountry(e.target.value)}>
-        <option>Select a country</option>
-        {countries.map(country => <option key={country.code} value={country.code}>{country.name}</option>)}
-        </select>
-        <h2>Year</h2>
-        <select disabled = {!country} onChange={e => setYear(e.target.value)}>
-        <option>Select a year</option>
-        { years.map(year => <option key={year}>{year}</option>) }
-        </select>
-        <h2></h2>
-        <Link href={`/holidays?country=${country}&year=${year}`} as={`/?country=${country}&year=${year}`}>
+        <form onSubmit={handleSubmit}>
+          <h2>Countries</h2>
+          <select value={country} onChange={e => setCountry(e.target.value)}>
+          <option>Select a country</option>
+          {countries.map(country => <option key={country.code} value={country.code}>{country.name}</option>)}
+          </select>
+          <h2>Year</h2>
+          <select disabled = {!country} value={year} onChange={e => setYear(e.target.value)}>
+          <option>Select a year</option>
+          { years.map(year => <option key={year}>{year}</option>) }
+          </select>
+          <h2></h2>
           <button disabled = {!year}> <h3> List holidays </h3> </button>
-        </Link>
+        </form>
       </main>
 
       <style jsx>{`
