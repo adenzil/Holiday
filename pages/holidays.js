@@ -24,12 +24,14 @@ const Holidays = () => {
 			})
 	}
 
-	return 	<div>
-						<h2>Holidays</h2>
-		        <ul>
-		        	{holidays.map(holiday => <li key={holiday.uuid} value={holiday.uuid}>{holiday.date} - {holiday.name}</li>)}
-		        </ul>
-       		</div>
+	return 	(
+		<div>
+			<h2>Holidays</h2>
+      <ul>
+      	{holidays.map(holiday => <li key={holiday.uuid} value={holiday.uuid}>{holiday.date} - {holiday.name}</li>)}
+      </ul>
+ 		</div>
+  )
 }
 
 export default Holidays
