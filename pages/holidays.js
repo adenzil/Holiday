@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import getConfig from 'next/config'
 
-const Holidays = () => {
+const Holidays = (props) => {
+
   const router = useRouter()
   const { country, year } = router.query
 
@@ -12,9 +13,13 @@ const Holidays = () => {
   const {publicRuntimeConfig} = getConfig()
   const {holidayApiURL, holidayApiKey} = publicRuntimeConfig
 
-  if(country && year) {
-    fetchHolidays()
-  }
+  useEffect(() => {
+    fetch(holidayApiURL + 'holidays?key=' + holidayApiKey+'&country=' + country + '&year=' + year)
+      .then(res => res.json())
+      .then((data)  => {
+        setHolidays(data.holidays)
+      })
+  }, [country, year]);
 
   function fetchHolidays() {
     fetch(holidayApiURL + 'holidays?key=' + holidayApiKey+'&country=' + country + '&year=' + year)
@@ -26,7 +31,7 @@ const Holidays = () => {
 
   return  (
     <div>
-      <h2>Holidays</h2>
+      { props.CountrySelector() }
       <ul>
         {holidays.map(holiday => <li key={holiday.uuid} value={holiday.uuid}>{holiday.date} - {holiday.name}</li>)}
       </ul>
