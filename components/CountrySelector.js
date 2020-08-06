@@ -32,7 +32,7 @@ function CountrySelector() {
           localStorage.setItem("countries", JSON.stringify(data.countries))
         })
     }
-    console.log(router.query)
+
     if(router.query.country) {
       setCountry(router.query.country)
     }

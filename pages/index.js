@@ -1,8 +1,10 @@
+import CountrySelector from '../components/CountrySelector'
+
 function Home(props) {
 
   return (
     <div className="container">
-      {props.CountrySelector()}
+      <CountrySelector />
     </div>
   )
 }

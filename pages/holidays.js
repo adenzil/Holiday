@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import getConfig from 'next/config'
+import CountrySelector from '../components/CountrySelector'
 
 const Holidays = (props) => {
 
@@ -31,7 +32,7 @@ const Holidays = (props) => {
 
   return  (
     <div>
-      { props.CountrySelector() }
+      <CountrySelector />
       <ul>
         {holidays.map(holiday => <li key={holiday.uuid} value={holiday.uuid}>{holiday.date} - {holiday.name}</li>)}
       </ul>
