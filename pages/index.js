@@ -1,12 +1,6 @@
-import CountrySelector from '../components/CountrySelector'
-
-function Home(props) {
+export default function(props) {
 
   return (
-    <div className="container">
-      <CountrySelector />
-    </div>
+    <index></index>
   )
 }
-
-export default Home
