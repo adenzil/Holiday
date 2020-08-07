@@ -21,14 +21,6 @@ const Holidays = (props) => {
       })
   }, [country, year]);
 
-  function fetchHolidays() {
-    fetch(holidayApiURL + 'holidays?key=' + holidayApiKey+'&country=' + country + '&year=' + year)
-      .then(res => res.json())
-      .then((data)  => {
-        setHolidays(data.holidays)
-      })
-  }
-
   return  (
     <div>
       <ul>
