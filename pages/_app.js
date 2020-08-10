@@ -16,6 +16,14 @@ function App({ Component, pageProps }) {
   const countryRef = useRef()
   const yearRef = useRef()
 
+  if(!country && router.query.country) {
+    setCountry(router.query.country)
+    countryRef.current.value = router.query.country
+  }
+  if(!year && router.query.year) {
+    setYear(router.query.year)
+  }
+
   // To fetch .env variables from next.config.js
   const {publicRuntimeConfig} = getConfig()
   const {holidayApiURL, holidayApiKey} = publicRuntimeConfig
@@ -31,14 +39,6 @@ function App({ Component, pageProps }) {
           setCountries(data.countries)
           localStorage.setItem("countries", JSON.stringify(data.countries))
         })
-    }
-
-    if(router.query.country) {
-      setCountry(router.query.country)
-    }
-
-    if(router.query.year) {
-      setYear(router.query.year)
     }
   }, []);
 
@@ -99,7 +99,11 @@ function App({ Component, pageProps }) {
           box-sizing: border-box;
         }
       `}</style>
-      <Component {...pageProps} />
+      <Component 
+        {...pageProps} 
+        country={country}
+        year={year}
+      />
     </div>
   )
 }

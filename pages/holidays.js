@@ -5,7 +5,7 @@ import getConfig from 'next/config'
 const Holidays = (props) => {
 
   const router = useRouter()
-  const { country, year } = router.query
+  const { country, year } = props
 
   const [holidays, setHolidays] = useState([])
 
@@ -14,11 +14,13 @@ const Holidays = (props) => {
   const {holidayApiURL, holidayApiKey} = publicRuntimeConfig
 
   useEffect(() => {
-    fetch(holidayApiURL + 'holidays?key=' + holidayApiKey+'&country=' + country + '&year=' + year)
+    if(country && year) {
+      fetch(holidayApiURL + 'holidays?key=' + holidayApiKey+'&country=' + country + '&year=' + year)
       .then(res => res.json())
       .then((data)  => {
         setHolidays(data.holidays)
       })
+    }
   }, [country, year]);
 
   return  (
