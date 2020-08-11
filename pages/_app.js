@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import fetch from 'isomorphic-unfetch'
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, createContext } from 'react'
 import getConfig from 'next/config'
 import {useRouter} from 'next/router'
 
@@ -12,6 +12,8 @@ function App({ Component, pageProps }) {
   const [country, setCountry] = useState("")
   const [year, setYear] = useState("")
   const [years, setYears] = useState([new Date().getFullYear() - 1])
+
+  const AppContext = createContext()
 
   if(!country && router.query.country) {
     setCountry(router.query.country)
@@ -44,63 +46,64 @@ function App({ Component, pageProps }) {
   }
 
   return (
-    <div>
-      <Head>
-        <title>Holiday Diary</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <AppContext.Provider value={{country, year}}>
+      <div>
+        <Head>
+          <title>Holiday Diary</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
 
-      <main>
-        <h1 className="title">
-          Search for a Holiday!
-        </h1>
-        <form onSubmit={handleSubmit}>
-          <h2>Countries</h2>
-          <select onChange={e => setCountry(e.target.value)}>
-            <option>Select a country</option>
-            {countries.map(country => <option key={country.code} value={country.code}>{country.name}</option>)}
-          </select>
-          <h2>Year</h2>
-          <select disabled = {!country} onChange={e => setYear(e.target.value)}>
-            <option>Select a year</option>
-            { years.map(year => <option key={year}>{year}</option>) }
-          </select>
-          <h2></h2>
-          <button disabled = {!year}> <h3> List holidays </h3> </button>
-        </form>
-      </main>
+        <main>
+          <h1 className="title">
+            Search for a Holiday!
+          </h1>
+          <form onSubmit={handleSubmit}>
+            <h2>Countries</h2>
+            <select onChange={e => setCountry(e.target.value)} value={country}>
+              <option>Select a country</option>
+              {countries.map(country => <option key={country.code} value={country.code}>{country.name}</option>)}
+            </select>
+            <h2>Year</h2>
+            <select disabled = {!country} onChange={e => setYear(e.target.value)} value={year}>
+              <option>Select a year</option>
+              { years.map(year => <option key={year}>{year}</option>) }
+            </select>
+            <h2></h2>
+            <button disabled = {!year}> <h3> List holidays </h3> </button>
+          </form>
+        </main>
 
-      <style jsx>{`
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-      `}</style>
+        <style jsx>{`
+          main {
+            padding: 5rem 0;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+          }
+        `}</style>
 
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
+        <style jsx global>{`
+          html,
+          body {
+            padding: 0;
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+              Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+              sans-serif;
+          }
 
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
-      <Component 
-        {...pageProps} 
-        country={country}
-        year={year}
-      />
-    </div>
+          * {
+            box-sizing: border-box;
+          }
+        `}</style>
+        <Component 
+          {...pageProps}
+          ctx={AppContext}
+        />
+      </div>
+    </AppContext.Provider>
   )
 }
 
