@@ -1,6 +1,6 @@
 export default function(props) {
 
   return (
-    <index></index>
+    <React.Fragment></React.Fragment>
   )
 }
