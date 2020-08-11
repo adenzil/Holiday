@@ -13,12 +13,8 @@ function App({ Component, pageProps }) {
   const [year, setYear] = useState("")
   const [years, setYears] = useState([new Date().getFullYear() - 1])
 
-  const countryRef = useRef()
-  const yearRef = useRef()
-
   if(!country && router.query.country) {
     setCountry(router.query.country)
-    countryRef.current.value = router.query.country
   }
   if(!year && router.query.year) {
     setYear(router.query.year)
@@ -44,7 +40,7 @@ function App({ Component, pageProps }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    router.push(`/holidays?country=${countryRef.current.value}&year=${yearRef.current.value}`)
+    router.push(`/holidays?country=${country}&year=${year}`)
   }
 
   return (
@@ -60,12 +56,12 @@ function App({ Component, pageProps }) {
         </h1>
         <form onSubmit={handleSubmit}>
           <h2>Countries</h2>
-          <select ref={countryRef} onChange={e => setCountry(e.target.value)}>
+          <select onChange={e => setCountry(e.target.value)}>
             <option>Select a country</option>
             {countries.map(country => <option key={country.code} value={country.code}>{country.name}</option>)}
           </select>
           <h2>Year</h2>
-          <select disabled = {!country} ref={yearRef} onChange={e => setYear(e.target.value)}>
+          <select disabled = {!country} onChange={e => setYear(e.target.value)}>
             <option>Select a year</option>
             { years.map(year => <option key={year}>{year}</option>) }
           </select>
