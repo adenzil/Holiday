@@ -1,8 +1,9 @@
 import Head from 'next/head'
 import fetch from 'isomorphic-unfetch'
-import { useRef, useState, useEffect, createContext } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import getConfig from 'next/config'
 import {useRouter} from 'next/router'
+import AppContext from './AppContext'
 
 function App({ Component, pageProps }) {
 
@@ -12,8 +13,6 @@ function App({ Component, pageProps }) {
   const [country, setCountry] = useState("")
   const [year, setYear] = useState("")
   const [years, setYears] = useState([new Date().getFullYear() - 1])
-
-  const AppContext = createContext()
 
   if(!country && router.query.country) {
     setCountry(router.query.country)
@@ -100,7 +99,6 @@ function App({ Component, pageProps }) {
         `}</style>
         <Component 
           {...pageProps}
-          ctx={AppContext}
         />
       </div>
     </AppContext.Provider>
