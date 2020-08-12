@@ -4,6 +4,7 @@ import { useRef, useState, useEffect } from 'react'
 import getConfig from 'next/config'
 import {useRouter} from 'next/router'
 import AppContext from './AppContext'
+import CountrySelector from './Components/CountrySelector'
 
 function App({ Component, pageProps }) {
 
@@ -44,8 +45,12 @@ function App({ Component, pageProps }) {
     router.push(`/holidays?country=${country}&year=${year}`)
   }
 
+  const changeCountry = (country) => {
+    setCountry(country)
+  }
+
   return (
-    <AppContext.Provider value={{country, year}}>
+    <AppContext.Provider value={{country, year, countries}}>
       <div>
         <Head>
           <title>Holiday Diary</title>
@@ -57,11 +62,7 @@ function App({ Component, pageProps }) {
             Search for a Holiday!
           </h1>
           <form onSubmit={handleSubmit}>
-            <h2>Countries</h2>
-            <select onChange={e => setCountry(e.target.value)} value={country}>
-              <option>Select a country</option>
-              {countries.map(country => <option key={country.code} value={country.code}>{country.name}</option>)}
-            </select>
+            <CountrySelector changeCountry={changeCountry} />
             <h2>Year</h2>
             <select disabled = {!country} onChange={e => setYear(e.target.value)} value={year}>
               <option>Select a year</option>
