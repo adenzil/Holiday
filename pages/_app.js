@@ -5,6 +5,10 @@ import getConfig from 'next/config'
 import {useRouter} from 'next/router'
 import AppContext from './AppContext'
 import CountrySelector from './Components/CountrySelector'
+import rootReducer from './reducers'
+import { createStore } from 'redux'
+
+const store = createStore(rootReducer)
 
 function App({ Component, pageProps }) {
 
