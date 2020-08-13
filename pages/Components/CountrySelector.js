@@ -1,11 +1,8 @@
-import AppContext from '../AppContext'
 import { useContext } from 'react'
 import { selectCountry } from '../actions'
 
-export default ({ changeCountry }) => {
+export default ({ changeCountry, countries, country }) => {
   
-  const { countries, country } = useContext(AppContext)
-
   return (
     <React.Fragment>
       <h2>Countries</h2>

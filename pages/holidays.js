@@ -1,12 +1,11 @@
 import { useRouter } from 'next/router'
 import { useState, useEffect, useContext } from 'react'
 import getConfig from 'next/config'
-import AppContext from './AppContext'
 
 const Holidays = (props) => {
 
   const router = useRouter()
-  const { country, year } = useContext(AppContext)
+  const { country, year } = props
 
   const [holidays, setHolidays] = useState([])
 
