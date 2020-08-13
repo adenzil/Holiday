@@ -1,11 +1,14 @@
 import { useRouter } from 'next/router'
 import { useState, useEffect, useContext } from 'react'
 import getConfig from 'next/config'
+import { useSelector } from 'react-redux'
 
 const Holidays = (props) => {
 
   const router = useRouter()
-  const { country, year } = props
+  
+  const country = useSelector((state) => state.country)
+  const year = useSelector((state) => state.year)
 
   const [holidays, setHolidays] = useState([])
 
