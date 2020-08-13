@@ -4,6 +4,9 @@ import getConfig from 'next/config'
 const {publicRuntimeConfig} = getConfig()
 const {holidayApiURL, holidayApiKey} = publicRuntimeConfig
 
+
+export const SET_COUNTRY = 'SET_COUNTRY'
+export const SET_YEAR = 'SET_YEAR'
 export const REQUEST_COUNTRIES = 'REQUEST_COUNTRIES'
 export const RECIEVE_COUNTRIES = 'RECIEVE_COUNTRIES'
 export const REQUEST_HOLIDAYS = 'REQUEST_HOLIDAYS'
