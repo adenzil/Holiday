@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'
 
 import {
+  SET_COUNTRY,
+  SET_YEAR,
   REQUEST_COUNTRIES,
   RECIEVE_COUNTRIES,
   REQUEST_HOLIDAYS,
@@ -9,33 +11,40 @@ import {
 
 const initialState = {
   countries: [],
+  holidays:[],
   country:'',
   year:''
 }
 
-const countries = (state = initialState, action) => {
+const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'REQUEST_COUNTRIES':
+    case SET_COUNTRY:
+      return {
+        ...state,
+        country: action.value
+      }
+    case SET_YEAR:
+      return {
+        ...state,
+        year: action.value
+      }
+    case REQUEST_COUNTRIES:
       return action.value
-    case 'RECIEVE_COUNTRIES':
+    case RECIEVE_COUNTRIES:
+      return {
+        ...state,
+        countries: action.value
+      }
+    case REQUEST_HOLIDAYS:
       return action.value
+    case RECIEVE_HOLIDAYS:
+      return {
+        ...state,
+        holidays: action.value
+      }
     default:
       return state
   }
 }
 
-const holidays = (state = initialState, action) => {
-  switch (action.type) {
-    case 'REQUEST_HOLIDAYS':
-      return action.value
-    case 'RECIEVE_HOLIDAYS':
-      return action.value
-    default:
-      return state
-  }
-}
-
-export default combineReducers({
-  countries,
-  holidays
-})
+export default rootReducer;
