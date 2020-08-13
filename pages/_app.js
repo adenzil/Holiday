@@ -7,6 +7,7 @@ import AppContext from './AppContext'
 import CountrySelector from './Components/CountrySelector'
 import rootReducer from './reducers'
 import { createStore } from 'redux'
+import { connect } from 'react-redux'
 
 const store = createStore(rootReducer)
 
@@ -49,7 +50,7 @@ function App({ Component, pageProps }) {
     router.push(`/holidays?country=${country}&year=${year}`)
   }
 
-  const changeCountry = (country) => {
+  const changeCountry = country => {
     setCountry(country)
   }
 
