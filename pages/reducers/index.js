@@ -7,7 +7,13 @@ import {
   RECIEVE_HOLIDAYS
 } from '../actions'
 
-const countries = (state = '', action) => {
+const initialState = {
+  countries: [],
+  country:'',
+  year:''
+}
+
+const countries = (state = initialState, action) => {
   switch (action.type) {
     case 'REQUEST_COUNTRIES':
       return action.value
@@ -18,7 +24,7 @@ const countries = (state = '', action) => {
   }
 }
 
-const holidays = (state = 2019, action) => {
+const holidays = (state = initialState, action) => {
   switch (action.type) {
     case 'REQUEST_HOLIDAYS':
       return action.value
