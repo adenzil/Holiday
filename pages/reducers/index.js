@@ -29,14 +29,14 @@ const rootReducer = (state = initialState, action) => {
         year: action.value
       }
     case REQUEST_COUNTRIES:
-      return action.value
+      return state
     case RECIEVE_COUNTRIES:
       return {
         ...state,
         countries: action.value
       }
     case REQUEST_HOLIDAYS:
-      return action.value
+      return state
     case RECIEVE_HOLIDAYS:
       return {
         ...state,
