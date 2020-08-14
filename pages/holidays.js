@@ -1,28 +1,20 @@
 import { useRouter } from 'next/router'
 import { useState, useEffect, useContext } from 'react'
-import getConfig from 'next/config'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchHolidays } from './actions'
 
 const Holidays = (props) => {
 
   const router = useRouter()
-  
+  const dispatch = useDispatch()
+
   const country = useSelector((state) => state.country)
   const year = useSelector((state) => state.year)
-
-  const [holidays, setHolidays] = useState([])
-
-  // To fetch .env variables from next.config.js
-  const {publicRuntimeConfig} = getConfig()
-  const {holidayApiURL, holidayApiKey} = publicRuntimeConfig
+  const holidays = useSelector((state) => state.holidays)
 
   useEffect(() => {
     if(country && year) {
-      fetch(holidayApiURL + 'holidays?key=' + holidayApiKey+'&country=' + country + '&year=' + year)
-      .then(res => res.json())
-      .then((data)  => {
-        setHolidays(data.holidays)
-      })
+      fetchHolidays(country, year)(dispatch)
     }
   }, [country, year]);
 
