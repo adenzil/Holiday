@@ -1,12 +1,12 @@
 import Head from 'next/head'
 import fetch from 'isomorphic-unfetch'
 import { useState, useEffect } from 'react'
-import getConfig from 'next/config'
 import {useRouter} from 'next/router'
 import CountrySelector from './Components/CountrySelector'
 import rootReducer from './reducers'
 import { createStore } from 'redux'
 import { Provider, useSelector, useDispatch } from 'react-redux'
+import { receiveCountries, selectCountry, selectYear, fetchCountries } from './actions'
 
 const App = () => {
 
@@ -15,8 +15,8 @@ const App = () => {
 
   const country = useSelector((state) => state.country)
   const year = useSelector((state) => state.year)
+  const countries = useSelector((state) => state.countries)
 
-  const [countries, setCountries] = useState([])
   const [years, setYears] = useState([new Date().getFullYear() - 1])
 
   const handleSubmit = (e) => {
@@ -25,11 +25,11 @@ const App = () => {
   }
 
   const changeCountry = value => {
-    dispatch({type:'SET_COUNTRY', value})
+    dispatch(selectCountry(value))
   }
 
   const changeYear = value => {
-    dispatch({type:'SET_YEAR', value})
+    dispatch(selectYear(value))
   }
 
   if(!country && router.query.country) {
@@ -39,21 +39,12 @@ const App = () => {
     changeYear(router.query.year)
   }
 
-  // To fetch .env variables from next.config.js
-  const {publicRuntimeConfig} = getConfig()
-  const {holidayApiURL, holidayApiKey} = publicRuntimeConfig
-
   useEffect(() => {
     const savedCountries = localStorage.getItem("countries");
     if (savedCountries) {
-      setCountries(JSON.parse(savedCountries));
+      dispatch(receiveCountries(JSON.parse(savedCountries)))
     } else {
-      fetch(holidayApiURL + 'countries?key=' + holidayApiKey)
-        .then(res => res.json())
-        .then((data)  => {
-          setCountries(data.countries)
-          localStorage.setItem("countries", JSON.stringify(data.countries))
-        })
+      fetchCountries()(dispatch)
     }
   }, []);
 
@@ -69,7 +60,7 @@ const App = () => {
           Search for a Holiday!
         </h1>
         <form onSubmit={handleSubmit}>
-          <CountrySelector changeCountry={changeCountry} countries={countries} country={country} />
+          <CountrySelector />
           <h2>Year</h2>
           <select disabled = {!country} onChange={e => changeYear(e.target.value)} value={year}>
             <option>Select a year</option>
