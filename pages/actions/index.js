@@ -7,62 +7,48 @@ const {holidayApiURL, holidayApiKey} = publicRuntimeConfig
 
 export const SET_COUNTRY = 'SET_COUNTRY'
 export const SET_YEAR = 'SET_YEAR'
-export const REQUEST_COUNTRIES = 'REQUEST_COUNTRIES'
 export const RECIEVE_COUNTRIES = 'RECIEVE_COUNTRIES'
-export const REQUEST_HOLIDAYS = 'REQUEST_HOLIDAYS'
 export const RECIEVE_HOLIDAYS = 'RECIEVE_HOLIDAYS'
 
-function requestCountries() {
+export function receiveCountries(value) {
   return {
-    type: REQUEST_COUNTRIES
+    type: RECIEVE_COUNTRIES,
+    value
   }
 }
 
-function receiveCountries(data) {
-  localStorage.setItem("countries", JSON.stringify(data.countries))
+function receiveHolidays(value) {
   return {
-    type: RECEIVE_POSTS,
-    countries: data.countries
-  }
-}
-
-function requestHolidays(country, year) {
-  return {
-    type: REQUEST_COUNTRIES
-  }
-}
-
-function receiveHolidays(data) {
-  return {
-    type: RECEIVE_HOLIDAYS,
-    countries: data.holidays
+    type: RECIEVE_HOLIDAYS,
+    value
   }
 }
 
 export const selectCountry = value => ({
-  type: 'SET_COUNTRY',
+  type: SET_COUNTRY,
   value
 })
 
 export const selectYear = value => ({
-  type: 'SET_YEAR',
+  type: SET_YEAR,
   value
 })
 
-function fetchCountries() {
+export function fetchCountries() {
   return dispatch => {
-    dispatch(requestCountries())
     return fetch(holidayApiURL + 'countries?key=' + holidayApiKey)
       .then(response => response.json())
-      .then(json => dispatch(receivePosts(json)))
+      .then(data => {
+        localStorage.setItem("countries", JSON.stringify(data.countries))
+        dispatch(receiveCountries(data.countries))
+      })
   }
 }
 
-function fetchHolidays(country, year) {
+export function fetchHolidays(country, year) {
   return dispatch => {
-    dispatch(requestHolidays())
-    return fetch(holidayApiURL + `/holidays?country=${country}&year=${year}`)
+    return fetch(holidayApiURL + `holidays?country=${country}&year=${year}&key=${holidayApiKey}`)
       .then(response => response.json())
-      .then(json => dispatch(receiveHolidays(json)))
+      .then(data => dispatch(receiveHolidays(data.holidays)))
   }
 }
