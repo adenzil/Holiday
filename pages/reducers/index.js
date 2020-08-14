@@ -3,9 +3,7 @@ import { combineReducers } from 'redux'
 import {
   SET_COUNTRY,
   SET_YEAR,
-  REQUEST_COUNTRIES,
   RECIEVE_COUNTRIES,
-  REQUEST_HOLIDAYS,
   RECIEVE_HOLIDAYS
 } from '../actions'
 
@@ -28,15 +26,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         year: action.value
       }
-    case REQUEST_COUNTRIES:
-      return state
     case RECIEVE_COUNTRIES:
       return {
         ...state,
         countries: action.value
       }
-    case REQUEST_HOLIDAYS:
-      return state
     case RECIEVE_HOLIDAYS:
       return {
         ...state,
