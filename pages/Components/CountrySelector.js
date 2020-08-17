@@ -1,21 +1,35 @@
 import { useContext } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import { selectCountry } from '../actions'
 
-export default () => {
 
-  const dispatch = useDispatch()
+const mapStateToProps = (state) => {
+  const { country, countries } = state
+  return {
+    country,
+    countries
+  }
+}
 
-  const country = useSelector((state) => state.country)
-  const countries = useSelector((state) => state.countries)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    selectCountry(country) {
+      dispatch(selectCountry(country));
+    }
+  }
+}
+
+const CountrySelector = (props) => {
 
   return (
     <React.Fragment>
       <h2>Countries</h2>
-      <select onChange={e => dispatch(selectCountry(e.target.value))} value={country}>
+      <select onChange={e => props.selectCountry(e.target.value)} value={props.country}>
         <option>Select a country</option>
-        {countries.map(country => <option key={country.code} value={country.code}>{country.name}</option>)}
+        {props.countries.map(country => <option key={country.code} value={country.code}>{country.name}</option>)}
       </select>
     </React.Fragment>
   )
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(CountrySelector);
