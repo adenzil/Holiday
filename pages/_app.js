@@ -2,11 +2,11 @@ import Head from 'next/head'
 import fetch from 'isomorphic-unfetch'
 import { useState, useEffect } from 'react'
 import {useRouter} from 'next/router'
-import CountrySelector from './Components/CountrySelector'
-import rootReducer from './reducers'
+import CountrySelector from '../components/CountrySelector'
+import rootReducer from '../store/reducers'
 import { createStore } from 'redux'
 import { Provider, useSelector, useDispatch } from 'react-redux'
-import { receiveCountries, selectCountry, selectYear, fetchCountries } from './actions'
+import { receiveCountries, selectCountry, selectYear, fetchCountries } from '../store/actions'
 
 const App = () => {
 

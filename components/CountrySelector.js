@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { connect } from 'react-redux'
-import { selectCountry } from '../actions'
+import { selectCountry } from '../store/actions'
 
 
 const mapStateToProps = (state) => {
