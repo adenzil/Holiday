@@ -5,7 +5,7 @@ import {
   SET_YEAR,
   RECIEVE_COUNTRIES,
   RECIEVE_HOLIDAYS
-} from '../actions'
+} from '../actions/action_types'
 
 const initialState = {
   countries: [],

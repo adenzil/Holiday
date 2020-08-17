@@ -5,10 +5,12 @@ const {publicRuntimeConfig} = getConfig()
 const {holidayApiURL, holidayApiKey} = publicRuntimeConfig
 
 
-export const SET_COUNTRY = 'SET_COUNTRY'
-export const SET_YEAR = 'SET_YEAR'
-export const RECIEVE_COUNTRIES = 'RECIEVE_COUNTRIES'
-export const RECIEVE_HOLIDAYS = 'RECIEVE_HOLIDAYS'
+import {
+  SET_COUNTRY,
+  SET_YEAR,
+  RECIEVE_COUNTRIES,
+  RECIEVE_HOLIDAYS
+} from './action_types'
 
 export function receiveCountries(value) {
   return {
