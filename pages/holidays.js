@@ -1,16 +1,26 @@
 import { useRouter } from 'next/router'
-import { useState, useEffect, useContext } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { connect, useDispatch } from 'react-redux'
 import { fetchHolidays } from '../store/actions'
 
-const Holidays = (props) => {
+const mapStateToProps = (state) => {
+  const { country, year, holidays } = state
+  return {
+    country,
+    year,
+    holidays
+  }
+}
 
-  const router = useRouter()
+const mapDispatchToProps = (dispatch) => {
+  return {
+    
+  }
+}
+
+const Holidays = ({ country, year, holidays }) => {
+
   const dispatch = useDispatch()
-
-  const country = useSelector((state) => state.country)
-  const year = useSelector((state) => state.year)
-  const holidays = useSelector((state) => state.holidays)
 
   useEffect(() => {
     if(country && year) {
@@ -27,4 +37,4 @@ const Holidays = (props) => {
   )
 }
 
-export default Holidays
+export default connect(mapStateToProps, mapDispatchToProps)(Holidays);

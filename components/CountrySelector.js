@@ -19,14 +19,14 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const CountrySelector = (props) => {
+const CountrySelector = ({ country, countries, selectCountry }) => {
 
   return (
     <React.Fragment>
       <h2>Countries</h2>
-      <select onChange={e => props.selectCountry(e.target.value)} value={props.country}>
+      <select onChange={e => selectCountry(e.target.value)} value={country}>
         <option>Select a country</option>
-        {props.countries.map(country => <option key={country.code} value={country.code}>{country.name}</option>)}
+        {countries.map(country => <option key={country.code} value={country.code}>{country.name}</option>)}
       </select>
     </React.Fragment>
   )
