@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { connect } from 'react-redux'
 import { selectCountry } from '../store/actions'
-
+import PropTypes from 'prop-types'
 
 const mapStateToProps = (state) => {
   const { country, countries } = state
@@ -30,6 +30,12 @@ const CountrySelector = ({ country, countries, selectCountry }) => {
       </select>
     </React.Fragment>
   )
+}
+
+CountrySelector.propTypes = {
+  country: PropTypes.string.isRequired,
+  countries: PropTypes.array.isRequired,
+  selectCountry: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CountrySelector);
