@@ -2,6 +2,7 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { connect, useDispatch } from 'react-redux'
 import { fetchHolidays } from '../store/actions'
+import PropTypes from 'prop-types'
 
 const mapStateToProps = (state) => {
   const { country, year, holidays } = state
@@ -35,6 +36,12 @@ const Holidays = ({ country, year, holidays }) => {
       </ul>
     </div>
   )
+}
+
+Holidays.propTypes = {
+  country: PropTypes.string.isRequired,
+  year: PropTypes.string.isRequired,
+  holidays: PropTypes.array.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Holidays);
