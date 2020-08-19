@@ -1,11 +1,12 @@
 import Head from 'next/head'
 import rootReducer from '../store/reducers'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import App from '../components/App'
+import thunk from 'redux-thunk'
 
 const AppWrapper = ({ Component, pageProps }) => {
-  const store = createStore(rootReducer)
+  const store = createStore(rootReducer, applyMiddleware(thunk))
 
   return (
     <Provider store={store}>
