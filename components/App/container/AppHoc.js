@@ -1,6 +1,6 @@
 import App from '../index.js'
 import { connect } from 'react-redux'
-import { selectCountry, selectYear, fetchCountries, receiveCountries } from '../../../store/actions'
+import { selectCountry, selectYear } from '../../../store/actions'
 
 const mapStateToProps = ( { country, year, countries } ) => {
   return {
@@ -17,9 +17,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     changeYear(value) {
       dispatch(selectYear(value))
-    },
-    loadCountries() {
-      dispatch(fetchCountries())
     }
   }
 }

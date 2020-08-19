@@ -1,7 +1,11 @@
-import { selectCountry } from '../../store/actions'
+import { useEffect } from 'react'
 import PropTypes from 'prop-types'
 
-const CountrySelector = ({ country, countries, selectCountry }) => {
+const CountrySelector = ({ country, countries, selectCountry, loadCountries }) => {
+
+  useEffect(() => {
+    loadCountries()
+  }, []);
 
   return (
     <React.Fragment>
@@ -17,7 +21,8 @@ const CountrySelector = ({ country, countries, selectCountry }) => {
 CountrySelector.propTypes = {
   country: PropTypes.string.isRequired,
   countries: PropTypes.array.isRequired,
-  selectCountry: PropTypes.func.isRequired
+  selectCountry: PropTypes.func.isRequired,
+  loadCountries: PropTypes.func.isRequired
 }
 
 export default CountrySelector

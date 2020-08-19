@@ -12,7 +12,7 @@ import {
   RECIEVE_HOLIDAYS
 } from './action_types'
 
-export function receiveCountries(value) {
+function receiveCountries(value) {
   return {
     type: RECIEVE_COUNTRIES,
     value

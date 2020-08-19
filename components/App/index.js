@@ -1,11 +1,11 @@
 import Head from 'next/head'
 import fetch from 'isomorphic-unfetch'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import CountrySelector from '../CountrySelector/container/CountrySelectorHoc'
 import PropTypes from 'prop-types'
 
-const App = ({ country, year, countries, changeCountry, changeYear, loadCountries }) => {
+const App = ({ country, year, countries, changeCountry, changeYear }) => {
 
   const router = useRouter()
 
@@ -22,10 +22,6 @@ const App = ({ country, year, countries, changeCountry, changeYear, loadCountrie
   if(!year && router.query.year) {
     changeYear(router.query.year)
   }
-
-  useEffect(() => {
-    loadCountries()
-  }, []);
 
   return (
     <div>
@@ -84,8 +80,7 @@ App.propTypes = {
   year: PropTypes.string,
   countries: PropTypes.array,
   changeCountry: PropTypes.func,
-  changeYear: PropTypes.func,
-  loadCountries: PropTypes.func
+  changeYear: PropTypes.func
 }
 
 export default App
