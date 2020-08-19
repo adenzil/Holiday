@@ -2,7 +2,7 @@ import Head from 'next/head'
 import rootReducer from '../store/reducers'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import App from '../components/App'
+import App from '../components/App/container/AppHoc'
 import thunk from 'redux-thunk'
 
 const AppWrapper = ({ Component, pageProps }) => {

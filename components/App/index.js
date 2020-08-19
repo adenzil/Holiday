@@ -2,30 +2,10 @@ import Head from 'next/head'
 import fetch from 'isomorphic-unfetch'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import CountrySelector from './CountrySelector'
-import rootReducer from '../store/reducers'
-import { connect, useDispatch } from 'react-redux'
-import { receiveCountries, selectCountry, selectYear, fetchCountries } from '../store/actions'
+import CountrySelector from '../CountrySelector'
+import { useDispatch } from 'react-redux'
+import { receiveCountries, fetchCountries } from '../../store/actions'
 import PropTypes from 'prop-types'
-
-const mapStateToProps = ( { country, year, countries } ) => {
-  return {
-    country,
-    year,
-    countries
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    changeCountry(value) {
-      dispatch(selectCountry(value))
-    },
-    changeYear(value) {
-      dispatch(selectYear(value))
-    }
-  }
-}
 
 const App = ({ country, year, countries, changeCountry, changeYear }) => {
 
@@ -113,4 +93,4 @@ App.propTypes = {
   countries: PropTypes.array,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default App
