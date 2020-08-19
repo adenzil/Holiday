@@ -20,9 +20,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     loadCountries() {
       dispatch(fetchCountries())
-    },
-    cachedCountries(countries) {
-      dispatch(receiveCountries(countries))
     }
   }
 }

@@ -38,6 +38,10 @@ export const selectYear = value => ({
 
 export function fetchCountries() {
   return dispatch => {
+    const savedCountries = localStorage.getItem("countries");
+    if (savedCountries) {
+      return dispatch(receiveCountries(JSON.parse(savedCountries)))
+    }
     return fetch(holidayApiURL + 'countries?key=' + holidayApiKey)
       .then(response => response.json())
       .then(data => {

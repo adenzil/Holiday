@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import CountrySelector from '../CountrySelector'
 import PropTypes from 'prop-types'
 
-const App = ({ country, year, countries, changeCountry, changeYear, loadCountries, cachedCountries }) => {
+const App = ({ country, year, countries, changeCountry, changeYear, loadCountries }) => {
 
   const router = useRouter()
 
@@ -24,12 +24,7 @@ const App = ({ country, year, countries, changeCountry, changeYear, loadCountrie
   }
 
   useEffect(() => {
-    const savedCountries = localStorage.getItem("countries");
-    if (savedCountries) {
-      cachedCountries(JSON.parse(savedCountries))
-    } else {
-      loadCountries()
-    }
+    loadCountries()
   }, []);
 
   return (
