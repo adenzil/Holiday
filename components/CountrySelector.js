@@ -3,8 +3,7 @@ import { connect } from 'react-redux'
 import { selectCountry } from '../store/actions'
 import PropTypes from 'prop-types'
 
-const mapStateToProps = (state) => {
-  const { country, countries } = state
+const mapStateToProps = ( { country, countries } ) => {
   return {
     country,
     countries
