@@ -3,13 +3,10 @@ import fetch from 'isomorphic-unfetch'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import CountrySelector from '../CountrySelector'
-import { useDispatch } from 'react-redux'
-import { receiveCountries, fetchCountries } from '../../store/actions'
 import PropTypes from 'prop-types'
 
-const App = ({ country, year, countries, changeCountry, changeYear }) => {
+const App = ({ country, year, countries, changeCountry, changeYear, loadCountries, cachedCountries }) => {
 
-  const dispatch = useDispatch()
   const router = useRouter()
 
   const [years, setYears] = useState([new Date().getFullYear() - 1])
@@ -29,9 +26,9 @@ const App = ({ country, year, countries, changeCountry, changeYear }) => {
   useEffect(() => {
     const savedCountries = localStorage.getItem("countries");
     if (savedCountries) {
-      dispatch(receiveCountries(JSON.parse(savedCountries)))
+      cachedCountries(JSON.parse(savedCountries))
     } else {
-      fetchCountries()(dispatch)
+      loadCountries()
     }
   }, []);
 
@@ -91,6 +88,9 @@ App.propTypes = {
   country: PropTypes.string,
   year: PropTypes.string,
   countries: PropTypes.array,
+  changeCountry: PropTypes.func,
+  changeYear: PropTypes.func,
+  loadCountries: PropTypes.func
 }
 
 export default App
