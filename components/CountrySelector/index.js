@@ -1,22 +1,5 @@
-import { useContext } from 'react'
-import { connect } from 'react-redux'
-import { selectCountry } from '../store/actions'
+import { selectCountry } from '../../store/actions'
 import PropTypes from 'prop-types'
-
-const mapStateToProps = ( { country, countries } ) => {
-  return {
-    country,
-    countries
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    selectCountry(country) {
-      dispatch(selectCountry(country));
-    }
-  }
-}
 
 const CountrySelector = ({ country, countries, selectCountry }) => {
 
@@ -37,4 +20,4 @@ CountrySelector.propTypes = {
   selectCountry: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CountrySelector);
+export default CountrySelector

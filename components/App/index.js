@@ -2,7 +2,7 @@ import Head from 'next/head'
 import fetch from 'isomorphic-unfetch'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import CountrySelector from '../CountrySelector'
+import CountrySelector from '../CountrySelector/container/CountrySelectorHoc'
 import PropTypes from 'prop-types'
 
 const App = ({ country, year, countries, changeCountry, changeYear, loadCountries }) => {
