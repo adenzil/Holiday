@@ -9,6 +9,7 @@ import {
   SET_COUNTRY,
   SET_YEAR,
   RECIEVE_COUNTRIES,
+  REQUEST_HOLIDAYS,
   RECIEVE_HOLIDAYS
 } from './action_types'
 
@@ -25,6 +26,10 @@ function receiveHolidays(value) {
     value
   }
 }
+
+export const loadHolidays = () => ({
+  type: REQUEST_HOLIDAYS
+})
 
 export const selectCountry = value => ({
   type: SET_COUNTRY,

@@ -4,6 +4,7 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import App from '../components/App/container/AppHoc'
 import thunk from 'redux-thunk'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const AppWrapper = ({ Component, pageProps }) => {
   const store = createStore(rootReducer, applyMiddleware(thunk))

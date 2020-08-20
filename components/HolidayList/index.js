@@ -1,13 +1,22 @@
-import { useEffect } from 'react'
+import { useEffect, Fragment } from 'react'
 import PropTypes from 'prop-types'
+import { Spinner } from 'react-bootstrap';
 
-const HolidayList = ({ country, year, holidays, fetchHolidays }) => {
+const HolidayList = ({ country, year, holidays, fetchHolidays, loadingHolidays }) => {
 
   useEffect(() => {
     if(country && year) {
       fetchHolidays(country, year)
     }
   }, [country, year]);
+
+  if(loadingHolidays) {
+    return (
+      <Fragment>
+        <Spinner animation="border" />
+      </Fragment>
+    )
+  }
 
   return  (
     <div>

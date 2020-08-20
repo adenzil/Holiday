@@ -15,7 +15,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(selectCountry(country));
     },
     loadCountries() {
-      console.log('called')
       dispatch(fetchCountries())
     }
   }

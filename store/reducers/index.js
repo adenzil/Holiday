@@ -4,12 +4,14 @@ import {
   SET_COUNTRY,
   SET_YEAR,
   RECIEVE_COUNTRIES,
+  REQUEST_HOLIDAYS,
   RECIEVE_HOLIDAYS
 } from '../actions/action_types'
 
 const initialState = {
   countries: [],
   holidays:[],
+  loadingHolidays: false,
   country:'',
   year:''
 }
@@ -31,10 +33,16 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         countries: action.value
       }
+    case REQUEST_HOLIDAYS:
+      return {
+        ...state,
+        loadingHolidays: true
+      }
     case RECIEVE_HOLIDAYS:
       return {
         ...state,
-        holidays: action.value
+        holidays: action.value,
+        loadingHolidays: false
       }
     default:
       return state
