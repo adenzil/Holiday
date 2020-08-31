@@ -2,12 +2,11 @@ import { connect } from 'react-redux'
 import HolidayList from '../index.js'
 import { fetchHolidays, loadHolidays } from '../../../store/actions'
 
-const mapStateToProps = ( { country, year, holidays, loadingHolidays } ) => {
+const mapStateToProps = ( { country, year, holidays } ) => {
   return {
     country,
     year,
-    holidays,
-    loadingHolidays
+    holidays
   }
 }
 

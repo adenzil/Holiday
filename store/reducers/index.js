@@ -36,7 +36,8 @@ const rootReducer = (state = initialState, action) => {
     case REQUEST_HOLIDAYS:
       return {
         ...state,
-        loadingHolidays: true
+        loadingHolidays: true,
+        holidays: []
       }
     case RECIEVE_HOLIDAYS:
       return {

@@ -2,11 +2,12 @@ import App from '../index.js'
 import { connect } from 'react-redux'
 import { selectCountry, selectYear } from '../../../store/actions'
 
-const mapStateToProps = ( { country, year, countries } ) => {
+const mapStateToProps = ( { country, year, countries, loadingHolidays } ) => {
   return {
     country,
     year,
-    countries
+    countries,
+    loadingHolidays
   }
 }
 

@@ -4,8 +4,9 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import CountrySelector from '../CountrySelector/container/CountrySelectorHoc'
 import PropTypes from 'prop-types'
+import Loader from '../Loader'
 
-const App = ({ country, year, countries, changeCountry, changeYear }) => {
+const App = ({ country, year, countries, changeCountry, changeYear, loadingHolidays }) => {
 
   const router = useRouter()
 
@@ -21,6 +22,10 @@ const App = ({ country, year, countries, changeCountry, changeYear }) => {
   }
   if(!year && router.query.year) {
     changeYear(router.query.year)
+  }
+
+  if(loadingHolidays) {
+    return <Loader />
   }
 
   return (
